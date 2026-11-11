@@ -31,7 +31,7 @@ To read the module through the I2C-serial interface instead, see [ISXMPL4420ex4]
 ## What you need
 
 - An [IS4420-M1 module](https://inacks.com/product/4-20ma-receiver-is4420-m1/)
-- An Arduino Uno
+- An Arduino Uno R3 (for an Uno R4, see [Notes](#notes))
 - A 4-20 mA transmitter (2-wire or 3-wire) and its loop power supply, or a 4-20 mA current source
 - The Arduino IDE. The sketch doesn't need any library.
 
@@ -48,7 +48,7 @@ To read the module through the I2C-serial interface instead, see [ISXMPL4420ex4]
 | SDA, SCL, SPD, ADR | Not used in this example |
 
 - The IS4420-M1 takes its power (3.2 to 3.5 V) from the Arduino 3.3V pin.
-- The TX pad only pulls the line low, so it needs a pull-up. On the Uno, pin 0 is already pulled up to 5 V through a 1 kΩ resistor to the board's USB-to-serial chip, so you don't need an extra resistor. On other boards, fit a 2.2 kΩ pull-up from TX to 3.3 V or 5 V.
+- The TX pad only pulls the line low, so it needs a pull-up. On the Uno R3, pin 0 is already pulled up to 5 V through a 1 kΩ resistor to the board's USB-to-serial chip, so you don't need an extra resistor. On other boards, fit a 2.2 kΩ pull-up from TX to 3.3 V or 5 V.
 - With a 2-wire transmitter: loop power supply + to the transmitter +, the transmitter - to CIN, and the loop power supply 0 V to GND.
 - With a 3-wire transmitter: the transmitter output to CIN, and the transmitter 0 V and the loop power supply 0 V to GND.
 - The current loop input isn't isolated: the loop power supply 0 V, the IS4420-M1 GND and the Arduino GND are connected together.
@@ -131,9 +131,9 @@ Any microcontroller with a UART can read the same line, and so can a PC through 
 
 ## Notes
 
-- **Uploading:** pin 0 is shared with the Uno's USB connection. Disconnect the TX wire while you upload a sketch, and don't send anything from the Serial Monitor.
+- **Uploading:** pin 0 is shared with the Uno R3's USB connection. Disconnect the TX wire while you upload a sketch, and don't send anything from the Serial Monitor.
 - **Why pin 0:** 115200 baud is too fast for SoftwareSerial to receive reliably on a 16 MHz board, so the example uses the hardware serial port.
-- **Boards with a second serial port:** on an Arduino Mega 2560 or Leonardo, connect TX to the RX pin of `Serial1` (pin 19 on the Mega 2560, pin 0 on the Leonardo) with a 2.2 kΩ pull-up, add `Serial1.begin(115200);` to `setup()` and read with `Serial1.readStringUntil('\n')`. The USB connection then stays free for uploading and for the Serial Monitor.
+- **Uno R4 and boards with a second serial port:** on an Arduino Uno R4, `Serial` is the USB port, so the sketch as it is doesn't read pin 0. On an Uno R4, Mega 2560 or Leonardo, connect TX to the RX pin of `Serial1` (pin 0 on the Uno R4 and the Leonardo, pin 19 on the Mega 2560) with a 2.2 kΩ pull-up, add `Serial1.begin(115200);` to `setup()` and read with `Serial1.readStringUntil('\n')`. The USB connection then stays free for uploading and for the Serial Monitor.
 - **Temperature:** it's the temperature inside the module, which can be above the ambient temperature.
 - **Protection:** CIN has no protection. Never connect the loop power supply straight to CIN, and never reverse the loop: both destroy the module.
 
@@ -143,7 +143,7 @@ Any microcontroller with a UART can read the same line, and so can a PC through 
 
 | Serial Monitor shows | What to check |
 |---|---|
-| Nothing | The Serial Monitor speed (115200 baud), the TX wire on pin 0, and the 3V3 and GND connections. The first line comes about 0.6 s after power-up. |
+| Nothing | The Serial Monitor speed (115200 baud), the TX wire on pin 0, and the 3V3 and GND connections. The first line comes about 0.6 s after power-up. On an Uno R4, see [Notes](#notes). |
 | About `0.00 mA   -25.0 %` | There's no loop current. Check the CIN connection, the transmitter and its loop power supply, and that the loop power supply 0 V goes to GND. |
 | `Over-range` | The loop current is above 21.50 mA. Check the transmitter. |
 | `No measurement` | The module couldn't measure during the last 100 ms. Check the 3V3 supply (3.2 to 3.5 V). |
