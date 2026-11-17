@@ -2,7 +2,7 @@
 
 <p align="center">
   <a href="https://inacks.com/product/4-20ma-receiver-is4420-m1/">
-    <img src="https://inacks.com/wp-content/uploads/IS4420-M1-I2C-UART-Current-Loop-Receiver-1.jpg" alt="IS4420-M1 I2C 4-20 mA current loop receiver module" width="250">
+    <img src="https://inacks.com/wp-content/uploads/IS4420-M1-I2C-UART-Current-Loop-Receiver-1.jpg" alt="IS4420-M1 I2C/UART 4-20 mA current loop receiver module" width="250">
   </a>
 </p>
 
@@ -45,10 +45,11 @@ To read the module through the I2C-serial interface instead, see [ISXMPL4420ex4]
 | GND | Arduino GND and the loop power supply 0 V |
 | TX | Arduino pin 0 (RX) |
 | CIN | Current loop input: the loop current flows into CIN and returns through GND |
-| SDA, SCL, SPD, ADR | Not used in this example |
+| SDA, SCL, SPD, ADR | GND (not used in this example) |
 
-- The IS4420-M1 takes its power (3.2 to 3.5 V) from the Arduino 3.3V pin.
+- The IS4420-M1 takes its 3.3 V supply from the Arduino 3.3V pin.
 - The TX pad only pulls the line low, so it needs a pull-up. On the Uno R3, pin 0 is already pulled up to 5 V through a 1 kΩ resistor to the board's USB-to-serial chip, so you don't need an extra resistor. On other boards, fit a 2.2 kΩ pull-up from TX to 3.3 V or 5 V.
+- You only use the UART here, so connect SDA, SCL, SPD and ADR to GND. Left open, they could pick up noise.
 - With a 2-wire transmitter: loop power supply + to the transmitter +, the transmitter - to CIN, and the loop power supply 0 V to GND.
 - With a 3-wire transmitter: the transmitter output to CIN, and the transmitter 0 V and the loop power supply 0 V to GND.
 - The current loop input isn't isolated: the loop power supply 0 V, the IS4420-M1 GND and the Arduino GND are connected together.
@@ -146,7 +147,7 @@ Any microcontroller with a UART can read the same line, and so can a PC through 
 | Nothing | The Serial Monitor speed (115200 baud), the TX wire on pin 0, and the 3V3 and GND connections. The first line comes about 0.6 s after power-up. On an Uno R4, see [Notes](#notes). |
 | About `0.00 mA   -25.0 %` | There's no loop current. Check the CIN connection, the transmitter and its loop power supply, and that the loop power supply 0 V goes to GND. |
 | `Over-range` | The loop current is above 21.50 mA. Check the transmitter. |
-| `No measurement` | The module couldn't measure during the last 100 ms. Check the 3V3 supply (3.2 to 3.5 V). |
+| `No measurement` | The module couldn't measure during the last 100 ms. Check the 3V3 supply (3.3 V). |
 
 If the upload fails, disconnect the TX wire from pin 0 and try again.
 
@@ -154,7 +155,7 @@ If the upload fails, disconnect the TX wire from pin 0 and try again.
 
 ## Get the IS4420-M1
 
-- 🛒 **[Buy the IS4420-M1](https://inacks.com/product/4-20ma-receiver-is4420-m1/)**: I2C 4-20 mA Current Loop Receiver Module
+- 🛒 **[Buy the IS4420-M1](https://inacks.com/product/4-20ma-receiver-is4420-m1/)**: I2C/UART 4-20 mA Current Loop Receiver Module
 - 📄 [IS4420-M1 datasheet (ISDOC146)](https://inacks.com/wp-content/uploads/IS4420-M1-Datasheet-I2C-4-20mA-Current-Loop-Receiver-ISDOC146.pdf): electrical specification, pad description, UART line format, I2C memory map and hardware examples
 
 ℹ️ For more information: [www.inacks.com](https://www.inacks.com)

@@ -16,7 +16,7 @@
 //   IS4420-M1 GND -> Uno GND and the loop power supply 0 V
 //   IS4420-M1 TX  -> Uno pin 0 (RX)
 //   IS4420-M1 CIN -> current loop (the loop current returns through GND)
-//   IS4420-M1 SDA, SCL, SPD and ADR are not used in this example.
+//   IS4420-M1 SDA, SCL, SPD and ADR -> Uno GND (the I2C is not used here)
 //
 // Notes:
 // - TX only pulls the line low, so it needs a pull-up. On the Uno R3, pin 0
