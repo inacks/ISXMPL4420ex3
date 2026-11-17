@@ -136,7 +136,7 @@ Any microcontroller with a UART can read the same line, and so can a PC through 
 - **Why pin 0:** 115200 baud is too fast for SoftwareSerial to receive reliably on a 16 MHz board, so the example uses the hardware serial port.
 - **Uno R4 and boards with a second serial port:** on an Arduino Uno R4, `Serial` is the USB port, so the sketch as it is doesn't read pin 0. On an Uno R4, Mega 2560 or Leonardo, connect TX to the RX pin of `Serial1` (pin 0 on the Uno R4 and the Leonardo, pin 19 on the Mega 2560) with a 2.2 kΩ pull-up, add `Serial1.begin(115200);` to `setup()` and read with `Serial1.readStringUntil('\n')`. The USB connection then stays free for uploading and for the Serial Monitor.
 - **Temperature:** it's the temperature inside the module, which can be above the ambient temperature.
-- **Protection:** CIN has no protection. Never connect the loop power supply straight to CIN, and never reverse the loop: both destroy the module.
+- **Protection:** CIN has no protection. Never connect the loop power supply straight to CIN, and never reverse the loop: either may permanently damage the module.
 
 ---
 
