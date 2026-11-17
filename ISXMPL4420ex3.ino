@@ -1,5 +1,6 @@
 // ISXMPL4420ex3 - Arduino UART Current Loop Receiver Using the IS4420 Module
 // https://inacks.com/is4420
+// Datasheet: https://inacks.com/wp-content/uploads/IS4420-M1-Datasheet-I2C-4-20mA-Current-Loop-Receiver-ISDOC146.pdf
 //
 // The IS4420-M1 sends one text line on its TX pad per measurement, about
 // every 100 ms (115200 baud, 8N1), for example:
